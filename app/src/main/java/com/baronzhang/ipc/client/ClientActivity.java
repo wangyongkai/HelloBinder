@@ -21,7 +21,7 @@ import com.baronzhang.ipc.server.Stub;
 import java.util.List;
 
 public class ClientActivity extends AppCompatActivity {
-
+// 参考AIdl项目 bindserviceAIDL
 
 //----------------------------------------------------------------------------
 
