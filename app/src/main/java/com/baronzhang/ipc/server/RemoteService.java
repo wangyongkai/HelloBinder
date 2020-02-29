@@ -3,6 +3,7 @@ package com.baronzhang.ipc.server;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Process;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -21,7 +22,7 @@ public class RemoteService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Log.d("RemoteService", " onCreate-----PID=" + Process.myPid());
         Book book = new Book();
         book.setName("三体");
         book.setPrice(88);
@@ -30,12 +31,20 @@ public class RemoteService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+
+
+        Log.d("RemoteService", " onBind-----PID=" + Process.myPid());
+
+
         return bookManager;
     }
 
-    private final Stub bookManager = new Stub() {
+    private final Stub bookManager = new Stub() {//这个对象就是要给client用的！ 但是跨进程穿不过去 需要代理
         @Override
         public List<Book> getBooks() throws RemoteException {
+
+            Log.d("RemoteService", " getBooks-----PID=" + Process.myPid());
+
             synchronized (this) {
                 if (books != null) {
                     return books;
@@ -56,8 +65,8 @@ public class RemoteService extends Service {
 
                 book.setPrice(book.getPrice() * 2);
                 books.add(book);
-
-                Log.e("Server", "books: " + book.toString());
+                Log.d("RemoteService", " getBooks-----PID=" + Process.myPid() + " books: " + book.toString());
+                // Log.e("Server", "books: " + book.toString());
             }
         }
     };

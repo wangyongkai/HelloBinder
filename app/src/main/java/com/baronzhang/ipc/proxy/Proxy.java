@@ -12,13 +12,13 @@ import java.util.List;
 
 /**
  * @author baronzhang (baron[dot]zhanglei[at]gmail[dot]com)
- *         05/01/2018
+ * 05/01/2018
  */
-public class Proxy implements BookManager {
+public class Proxy implements BookManager {//这个类就是供client使用的代理对象  因为对象是不可能夸进程引用的
 
     private static final String DESCRIPTOR = "com.baronzhang.ipc.server.BookManager";
 
-    private IBinder remote;
+    private IBinder remote;//真正的binder穿过来的代理对象BinderProxy类型
 
     public Proxy(IBinder remote) {
 
